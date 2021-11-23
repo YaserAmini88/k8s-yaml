@@ -1,0 +1,16 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+   name: lifecycle-pod
+spec:
+   containers: 
+   - name: lifecycle-container
+     image: nginx
+     lifecycle:
+       postStart:
+         exec:
+           command: ["bin/sh", '-c', "echo  Welcom! > /usr/share/poststart-msg"]
+       preStop:
+         exec:
+           command: ["/usr/sbin/nginx", "-s", "quit"]	
