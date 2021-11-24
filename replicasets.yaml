@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+   name: replicasets-guestbook
+   labels:
+      app: guestbook
+      tier: frontend
+spec:
+   replicas: 3
+   selector: #Select pods based on their label and expression
+      matchLabels:
+          tier: frontend
+      matchExpressions:
+          - {key: tier, operator: In, values: [frontend]}
+   template: #Replicaset uses these template to create 3 pods
+      metadata:
+          labels:
+             app: guestbook
+             tier: frontend
+      spec:
+          containers:
+          - name: php-redis
+            image: gcr.io/google-samples/gb-frontend:v5
+            ports:
+            - containerPort: 80  
